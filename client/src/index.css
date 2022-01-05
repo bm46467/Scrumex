@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-primary--outlined {
+    @apply px-4 py-2 border-2 border-indigo-600 rounded-full 
+          uppercase font-bold text-sm hover:scale-105 transition
+          shadow-sm shadow-gray-200/10;
+  }
+
+  .btn-primary--filled {
+    @apply bg-gradient-to-r from-sky-500 to-indigo-500 px-4 py-2 border-none border-transparent  
+      rounded-full uppercase font-bold text-sm hover:scale-105 transition 
+      shadow-sm shadow-gray-200/10;
+  }
+}
