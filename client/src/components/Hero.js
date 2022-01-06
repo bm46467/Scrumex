@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const Hero = () => {
   return (
     <section
@@ -18,7 +20,9 @@ const Hero = () => {
           Take your work to the next level.
         </p>
 
-        <button className="btn-primary--filled px-8">Get started</button>
+        <Link to="/register">
+          <button className="btn-primary--filled px-8">Get started</button>
+        </Link>
       </div>
 
       <div className="max-w-[400px] mx-auto">
