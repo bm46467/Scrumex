@@ -1,8 +1,12 @@
-import { MenuIcon, XIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+import { MenuIcon, XIcon } from '@heroicons/react/solid'
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+
+  const location = useLocation()
 
   // Prevent from scrolling when mobile menu is shown
   useEffect(() => {
@@ -12,6 +16,8 @@ const Navbar = () => {
   }, [showMobileMenu])
 
   const toggleMenu = () => setShowMobileMenu((prev) => !prev)
+
+  const handleCloseMobileMenu = () => setShowMobileMenu(false)
 
   return (
     <>
@@ -37,22 +43,28 @@ const Navbar = () => {
           )}
 
           <ul className="hidden md:flex gap-10">
-            {['Home', 'About', 'Features', 'Contact'].map((section) => (
-              <li key={section}>
-                <a
-                  href={`#${section.toLowerCase()}`}
-                  className="text-gray-300 text-md font-light hover:text-gray-400 
+            {location.pathname === '/' &&
+              ['Home', 'About', 'Features', 'Contact'].map((section) => (
+                <li key={section}>
+                  <a
+                    href={`#${section.toLowerCase()}`}
+                    className="text-gray-300 text-md font-light hover:text-gray-400 
               transition duration-200 ease-out"
-                >
-                  {section}
-                </a>
-              </li>
-            ))}
+                  >
+                    {section}
+                  </a>
+                </li>
+              ))}
           </ul>
 
           <div className="hidden md:flex gap-3">
-            <button className="btn-primary--outlined">Sign in</button>
-            <button className="btn-primary--filled">Sign up</button>
+            <Link to="/login">
+              <button className="btn-primary--outlined">Sign in</button>
+            </Link>
+
+            <Link to="register">
+              <button className="btn-primary--filled">Sign up</button>
+            </Link>
           </div>
         </nav>
       </div>
@@ -61,17 +73,28 @@ const Navbar = () => {
       {showMobileMenu && (
         <div className="fixed w-full top-[64px] bottom-0 z-10 bg-slate-900">
           <ul className="flex flex-col items-center gap-10 pt-10">
-            {['Home', 'About', 'Features', 'Contact'].map((section) => (
-              <li key={section} onClick={() => setShowMobileMenu(false)}>
-                <a
-                  href={`#${section.toLowerCase()}`}
-                  className="text-gray-300 text-xl font-medium hover:text-gray-400 
+            {location.pathname === '/' &&
+              ['Home', 'About', 'Features', 'Contact'].map((section) => (
+                <li key={section} onClick={handleCloseMobileMenu}>
+                  <a
+                    href={`#${section.toLowerCase()}`}
+                    className="text-gray-300 text-xl font-medium hover:text-gray-400 
                   transition duration-500 ease-out"
-                >
-                  {section}
-                </a>
-              </li>
-            ))}
+                  >
+                    {section}
+                  </a>
+                </li>
+              ))}
+            <li onClick={handleCloseMobileMenu}>
+              <Link to="/login">
+                <button className="btn-primary--outlined">Sign in</button>
+              </Link>
+            </li>
+            <li onClick={handleCloseMobileMenu}>
+              <Link to="register">
+                <button className="btn-primary--filled">Sign up</button>
+              </Link>
+            </li>
           </ul>
         </div>
       )}
