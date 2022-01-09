@@ -7,7 +7,7 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 
 const schema = object({
   email: string()
-    .required('Email is required')
+    .required('Email address is required')
     .email('Please provide a valid email address'),
   password: string()
     .required('Password is required')
