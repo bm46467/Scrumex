@@ -20,7 +20,10 @@ const schema = object({
     .matches(nameRegex, 'Last name is invalid'),
   email: string()
     .required('Email address is required')
-    .email('Please provide a valid email address'),
+    .matches(
+      /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
+      'Please provide a valid email address'
+    ),
   password: string()
     .required('Password is required')
     .min(8, 'Password must contain at least 8 characters'),
