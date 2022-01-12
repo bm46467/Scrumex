@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { useAuth } from '../context'
+
 import { MenuIcon, XIcon } from '@heroicons/react/solid'
 
 const Navbar = () => {
+  const { user, hasLogged, loading, logout } = useAuth()
+
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
   const location = useLocation()
@@ -18,6 +22,11 @@ const Navbar = () => {
   const toggleMenu = () => setShowMobileMenu((prev) => !prev)
 
   const handleCloseMobileMenu = () => setShowMobileMenu(false)
+
+  const handleLogout = async () => {
+    await logout()
+    handleCloseMobileMenu()
+  }
 
   return (
     <>
@@ -58,13 +67,32 @@ const Navbar = () => {
           </ul>
 
           <div className="hidden md:flex gap-3">
-            <Link to="/login">
-              <button className="btn-primary--outlined">Sign in</button>
-            </Link>
+            {user ? (
+              <>
+                {hasLogged && (
+                  <button
+                    className="btn-primary--outlined"
+                    onClick={async () => {
+                      await logout()
+                      handleCloseMobileMenu()
+                    }}
+                    disabled={loading}
+                  >
+                    {loading ? 'Logging out...' : 'Log out'}
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="btn-primary--outlined">Sign in</button>
+                </Link>
 
-            <Link to="register">
-              <button className="btn-primary--filled">Sign up</button>
-            </Link>
+                <Link to="register">
+                  <button className="btn-primary--filled">Sign up</button>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>
@@ -85,16 +113,33 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
-            <li onClick={handleCloseMobileMenu}>
-              <Link to="/login">
-                <button className="btn-primary--outlined">Sign in</button>
-              </Link>
-            </li>
-            <li onClick={handleCloseMobileMenu}>
-              <Link to="register">
-                <button className="btn-primary--filled">Sign up</button>
-              </Link>
-            </li>
+            {user ? (
+              <>
+                {hasLogged && (
+                  <li onClick={handleLogout}>
+                    <button
+                      className="btn-primary--outlined"
+                      disabled={loading}
+                    >
+                      {loading ? 'Logging out...' : 'Log out'}
+                    </button>
+                  </li>
+                )}
+              </>
+            ) : (
+              <>
+                <li onClick={handleCloseMobileMenu}>
+                  <Link to="/login">
+                    <button className="btn-primary--outlined">Sign in</button>
+                  </Link>
+                </li>
+                <li onClick={handleCloseMobileMenu}>
+                  <Link to="register">
+                    <button className="btn-primary--filled">Sign up</button>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}

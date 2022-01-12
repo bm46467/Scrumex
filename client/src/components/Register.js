@@ -4,6 +4,9 @@ import { object, string, ref } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { LockClosedIcon } from '@heroicons/react/solid'
+import { useAuth } from '../context'
+
+import { Spinner } from './'
 
 const nameRegex =
   /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
@@ -34,6 +37,8 @@ const schema = object({
 })
 
 const Register = () => {
+  const { register: registerUser, loading } = useAuth()
+
   const {
     register,
     handleSubmit,
@@ -43,9 +48,8 @@ const Register = () => {
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = (values) => {
-    console.log(values)
-
+  const onSubmit = async ({ firstName, lastName, email, password }) => {
+    await registerUser(firstName, lastName, email, password)
     reset()
   }
 
@@ -59,120 +63,133 @@ const Register = () => {
       >
         <LockClosedIcon className="h-7 text-indigo-400" />
 
-        <h4 className="text-3xl font-light text-gray-100 mb-4">Sign up</h4>
+        <h4 className="text-3xl font-light text-gray-100 mb-4">
+          {loading ? 'Signing up...' : 'Sign up'}
+        </h4>
 
-        <div className="flex gap-4">
-          <div className="relative mt-2 w-full">
-            <input
-              id="firstName"
-              name="firstName"
-              className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
+        {loading ? (
+          <Spinner color="text-indigo-500" />
+        ) : (
+          <>
+            <div className="flex gap-4">
+              <div className="relative mt-2 w-full">
+                <input
+                  id="firstName"
+                  name="firstName"
+                  className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
               ${errors?.firstName?.message && 'focus:border-red-800'}
               focus:outline-none focus:border-indigo-600 placeholder-transparent`}
-              type="text"
-              placeholder="First name"
-              {...register('firstName')}
-            />
-            <label htmlFor="firstName" className="form-label">
-              First name
-            </label>
+                  type="text"
+                  placeholder="First name"
+                  {...register('firstName')}
+                />
+                <label htmlFor="firstName" className="form-label">
+                  First name
+                </label>
 
-            <span className="text-red-800 inline-block pt-2">
-              {errors?.firstName?.message}
-            </span>
-          </div>
+                <span className="text-red-800 inline-block pt-2">
+                  {errors?.firstName?.message}
+                </span>
+              </div>
 
-          <div className="relative mt-2 w-full">
-            <input
-              id="lastName"
-              name="lastName"
-              className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
+              <div className="relative mt-2 w-full">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
               ${errors?.lastName?.message && 'focus:border-red-800'}
               focus:outline-none focus:border-indigo-600 placeholder-transparent`}
-              type="text"
-              placeholder="Last name"
-              {...register('lastName')}
-            />
-            <label htmlFor="lastName" className="form-label">
-              Last name
-            </label>
+                  type="text"
+                  placeholder="Last name"
+                  {...register('lastName')}
+                />
+                <label htmlFor="lastName" className="form-label">
+                  Last name
+                </label>
 
-            <span className="text-red-800 inline-block pt-2">
-              {errors?.lastName?.message}
-            </span>
-          </div>
-        </div>
+                <span className="text-red-800 inline-block pt-2">
+                  {errors?.lastName?.message}
+                </span>
+              </div>
+            </div>
 
-        <div className="relative mt-2 w-full">
-          <input
-            id="email"
-            name="email"
-            className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
+            <div className="relative mt-2 w-full">
+              <input
+                id="email"
+                name="email"
+                className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
             ${errors?.email?.message && 'focus:border-red-800'}
             focus:outline-none focus:border-indigo-600 placeholder-transparent`}
-            type="text"
-            placeholder="Email address"
-            {...register('email')}
-          />
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
+                type="text"
+                placeholder="Email address"
+                {...register('email')}
+              />
+              <label htmlFor="email" className="form-label">
+                Email address
+              </label>
 
-          <span className="text-red-800 inline-block pt-2">
-            {errors?.email?.message}
-          </span>
-        </div>
+              <span className="text-red-800 inline-block pt-2">
+                {errors?.email?.message}
+              </span>
+            </div>
 
-        <div className="relative mt-2 w-full">
-          <input
-            id="password"
-            name="password"
-            className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
+            <div className="relative mt-2 w-full">
+              <input
+                id="password"
+                name="password"
+                className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
             ${errors?.password?.message && 'focus:border-red-800'}
             focus:outline-none focus:border-indigo-600 placeholder-transparent`}
-            type="password"
-            placeholder="Password"
-            {...register('password')}
-          />
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
+                type="password"
+                placeholder="Password"
+                {...register('password')}
+              />
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
 
-          <span className="text-red-800 inline-block pt-2">
-            {errors?.password?.message}
-          </span>
-        </div>
+              <span className="text-red-800 inline-block pt-2">
+                {errors?.password?.message}
+              </span>
+            </div>
 
-        <div className="relative mt-2 w-full">
-          <input
-            id="passwordConfirm"
-            name="passwordConfirm"
-            className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
+            <div className="relative mt-2 w-full">
+              <input
+                id="passwordConfirm"
+                name="passwordConfirm"
+                className={`peer w-full h-11 border-b-2 bg-transparent border-gray-400
             ${errors?.passwordConfirm?.message && 'focus:border-red-800'}
             focus:outline-none focus:border-indigo-600 placeholder-transparent`}
-            type="password"
-            placeholder="Confirm password"
-            {...register('passwordConfirm')}
-          />
-          <label htmlFor="passwordConfirm" className="form-label">
-            Confirm password
-          </label>
+                type="password"
+                placeholder="Confirm password"
+                {...register('passwordConfirm')}
+              />
+              <label htmlFor="passwordConfirm" className="form-label">
+                Confirm password
+              </label>
 
-          <span className="text-red-800 inline-block pt-2">
-            {errors?.passwordConfirm?.message}
-          </span>
-        </div>
+              <span className="text-red-800 inline-block pt-2">
+                {errors?.passwordConfirm?.message}
+              </span>
+            </div>
 
-        <button className="btn-primary--filled mt-6 px-12">Register</button>
+            <button
+              className="btn-primary--filled mt-6 px-12"
+              disabled={loading}
+            >
+              Register
+            </button>
 
-        <div className="flex gap-2 items-center">
-          <span className="flex-1 text-gray-500 text-sm">
-            Already registered?{' '}
-          </span>
-          <Link to="/login">
-            <span className="text-indigo-600 cursor-pointer">Sign in</span>
-          </Link>
-        </div>
+            <div className="flex gap-2 items-center">
+              <span className="flex-1 text-gray-500 text-sm">
+                Already registered?{' '}
+              </span>
+              <Link to="/login">
+                <span className="text-indigo-600 cursor-pointer">Sign in</span>
+              </Link>
+            </div>
+          </>
+        )}
       </form>
     </div>
   )
