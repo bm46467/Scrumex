@@ -99,7 +99,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {showMobileMenu && (
-        <div className="fixed w-full top-[64px] bottom-0 z-10 bg-slate-900">
+        <div className="fixed w-full top-[64px] bottom-0 z-30 bg-slate-900">
           <ul className="flex flex-col items-center gap-10 pt-10">
             {location.pathname === '/' &&
               ['Home', 'About', 'Features', 'Contact'].map((section) => (

@@ -4,7 +4,14 @@ import { AuthProvider } from './context/AuthContext'
 
 import { Login, Navbar, Register } from './components'
 
-import { Home, Dashboard } from './pages'
+import {
+  Home,
+  Dashboard,
+  Projects,
+  Teams,
+  Leaderboard,
+  Settings,
+} from './pages'
 
 const App = () => {
   return (
@@ -16,7 +23,12 @@ const App = () => {
             <Route index path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route path="projects" element={<Projects />} />
+              <Route path="teams" element={<Teams />} />
+              <Route path="leaderboard" element={<Leaderboard />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Routes>
         </div>
       </AuthProvider>
