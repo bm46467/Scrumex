@@ -21,6 +21,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        // TODO: Dodac admina
     ];
 
     /**
@@ -31,4 +32,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    protected $guarded = [];
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withTimestamps();
+    }
+    public function tasks()
+    {    
+        return $this->hasMany(Task::class);
+    }
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class)->withTimestamps();
+    }
+    public function trophies()
+    {
+        return $this->hasOne(Trophy::class)->withTimestamps();
+    }
 }
