@@ -4,6 +4,8 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { FaUserAlt } from 'react-icons/fa'
 
+import { CreateTeamModal } from '../components'
+
 const TeamDetails = ({ name }) => {
   const [open, setOpen] = useState(false)
 
@@ -30,7 +32,7 @@ const TeamDetails = ({ name }) => {
         <>
           <div className="grid grid-cols-2 gap-3 mt-8 pl-11">
             <div className="flex flex-col gap-3 text-lg text-gray-500 font-regular">
-              <div>Board</div>
+              <div>Department</div>
               <div>Backend development</div>
             </div>
             <div className="flex flex-col gap-3 text-lg text-gray-500 font-regular">
@@ -63,24 +65,37 @@ const TeamDetails = ({ name }) => {
 }
 
 const Teams = () => {
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleCreateTeam = () => {
+    setOpenModal(true)
+  }
+
   return (
-    <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
-      <h2 className="text-gray-500 text-3xl">Teams</h2>
+    <>
+      {openModal && <CreateTeamModal setOpenModal={setOpenModal} />}
 
-      <div className="flex mt-8">
-        <button className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105">
-          <AiOutlinePlus className="inline-block text-2xl" /> Create Team
-        </button>
-      </div>
+      <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
+        <h2 className="text-gray-500 text-3xl">Teams</h2>
 
-      <div className="flex flex-col gap-6 mt-8 text-gray-700 font-bold text-2xl">
-        {['Team numero uno', 'Team numero duo', 'Team numero tres'].map(
-          (name) => (
-            <TeamDetails key={name} name={name} />
-          )
-        )}
+        <div className="flex mt-8">
+          <button
+            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+            onClick={handleCreateTeam}
+          >
+            <AiOutlinePlus className="inline-block text-2xl" /> Create Team
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-6 mt-8 text-gray-700 font-bold text-2xl">
+          {['Team numero uno', 'Team numero duo', 'Team numero tres'].map(
+            (name) => (
+              <TeamDetails key={name} name={name} />
+            )
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
