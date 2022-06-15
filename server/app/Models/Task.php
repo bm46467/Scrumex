@@ -9,7 +9,12 @@ class Task extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    protected $fillable = [
+        'description',
+        'status',
+        'sprint_id',
+        'user_id'
+    ];
     public function sprints()
     {
         return $this->belongsTo(Sprint::class);

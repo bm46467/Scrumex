@@ -15,4 +15,5 @@ class Trophy extends Model
         return $this->belongsTo(User::class)->withTimestamps();
     }
     
+    
 }

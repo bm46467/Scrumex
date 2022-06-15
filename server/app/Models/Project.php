@@ -10,6 +10,14 @@ class Project extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $table ='projects';
+    protected $fillable = [
+        'pmid',
+        'projectName',
+        'description',
+        'endingDate'
+    ];
+    
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
