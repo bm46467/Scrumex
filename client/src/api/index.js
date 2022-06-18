@@ -47,3 +47,12 @@ export const getProjectUsers = (projectId) =>
   api.get(`/projects/${projectId}/users`)
 
 export const deleteProject = (projectId) => api.delete(`/projects/${projectId}`)
+
+// Sprints
+export const createSprint = (projectId, startDate, stopDate, interval) =>
+  api.post(`/projects/${projectId}/sprints`, {
+    project_id: projectId,
+    startDate,
+    stopDate,
+    interval,
+  })

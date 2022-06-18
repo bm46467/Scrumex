@@ -69,7 +69,7 @@ const ProjectCardItem = ({ project, projects, setProjects }) => {
           {project.pmid === user.id && (
             <div className="inline-flex">
               <button
-                className="btn-primary--filled from-red-600 to-red-600 mx-3 my-4 px-12"
+                className="btn-primary--filled from-red-500 to-red-500 mx-3 my-4 px-12"
                 onClick={() => handleDelete(project.id)}
               >
                 <BsFillTrashFill className="inline-flex mr-2" />
