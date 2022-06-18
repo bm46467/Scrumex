@@ -1,20 +1,19 @@
-import SprintCard from '../components'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getProjectUsers } from '../api'
 
 const ProjectDetailsItem = ({ project }) => {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(0)
 
   useEffect(() => {
     const getAllUsersFromProject = async () => {
       const { data } = await getProjectUsers(project.id)
-      setUsers(data)
+      setUsers(data.length + 1)
     }
 
     getAllUsersFromProject()
-  }, [])
+  }, [project])
 
   return (
     <div className="p-4">
@@ -34,7 +33,7 @@ const ProjectDetailsItem = ({ project }) => {
 
       <p className="flex flex-row gap-4 mt-2 ml-3 font-sans text-lg">
         {' '}
-        {users.length} <BsFillPeopleFill className="text-3xl" />{' '}
+        {users} <BsFillPeopleFill className="text-3xl" />{' '}
       </p>
     </div>
   )

@@ -24,6 +24,9 @@ export const getUser = () => api.get('/user')
 
 export const logoutUser = () => api.post('/logout')
 
+// Users
+export const getUsers = () => api.get('/users')
+
 // Projects
 export const createProject = ({ pmid, projectName, description, endingDate }) =>
   api.post('/projects', {
@@ -32,6 +35,9 @@ export const createProject = ({ pmid, projectName, description, endingDate }) =>
     description,
     endingDate,
   })
+
+export const addUserToProject = (projectId, userId) =>
+  api.post(`/projects/${projectId}/users/${userId}`)
 
 export const getProjects = () => api.get('/projects')
 

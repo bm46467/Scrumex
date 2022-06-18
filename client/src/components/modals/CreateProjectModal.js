@@ -44,7 +44,7 @@ const CreateProjectModal = ({ setOpenModal, projects, setProjects }) => {
 
     reset()
     setLoading(false)
-    toast('Successfully created a new project!')
+    toast('Successfully created new project!')
     setOpenModal(false)
   }
 

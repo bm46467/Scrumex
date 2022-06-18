@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { getProject, getAllSprints } from '../api'
+import { getProject, getAllSprints, getProjectUsers } from '../api'
 import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
 import { useParams } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'
 import CreateSprintModal from '../components/modals/CreateSprintModal'
+import AddEmployeeModal from '../components/modals/AddEmployeeModal'
 
 const ProjectDetails = () => {
   const { projectId } = useParams()
@@ -11,6 +12,7 @@ const ProjectDetails = () => {
   const [project, setProject] = useState([])
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false)
 
   useEffect(() => {
     const getSpecificProject = async () => {
@@ -31,6 +33,10 @@ const ProjectDetails = () => {
 
   return (
     <>
+      {openEmployeeModal && (
+        <AddEmployeeModal setOpenEmployeeModal={setOpenEmployeeModal} />
+      )}
+
       {openModal && (
         <CreateSprintModal
           setOpenModal={setOpenModal}
@@ -47,7 +53,7 @@ const ProjectDetails = () => {
         <div className="flex mt-8 mb-6">
           <button
             className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
-            // onClick={() => setOpenModal(true)}
+            onClick={() => setOpenEmployeeModal(true)}
           >
             <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
           </button>
@@ -64,7 +70,7 @@ const ProjectDetails = () => {
             </p>
           )}
 
-          <div className="mx-auto box-content border-0 rounded-lg w-5/6 my-5 bg-slate-300 grid grid-cols-3 justify-items-center">
+          <div className="mx-auto box-content border-0 rounded-lg w-5/6 my-5 px-4 bg-slate-300 flex flex-wrap gap-6">
             {loading ? (
               <div className="p-4">
                 <Spinner color="text-indigo-500" />

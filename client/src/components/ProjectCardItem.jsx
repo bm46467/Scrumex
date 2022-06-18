@@ -7,7 +7,7 @@ import { useAuth } from '../context'
 import Spinner from './Spinner'
 
 const ProjectCardItem = ({ project, projects, setProjects }) => {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(0)
   const [loading, setLoading] = useState(false)
 
   const { user } = useAuth()
@@ -16,7 +16,7 @@ const ProjectCardItem = ({ project, projects, setProjects }) => {
     const getAllUsersFromProject = async () => {
       if (project.id) {
         const { data } = await getProjectUsers(project.id)
-        setUsers(data)
+        setUsers(data.length + 1)
       }
     }
 
@@ -56,7 +56,7 @@ const ProjectCardItem = ({ project, projects, setProjects }) => {
 
           <p className="flex flex-row gap-4 mt-2 ml-3 font-sans text-lg">
             {' '}
-            {users.length} <BsFillPeopleFill className="text-3xl" />{' '}
+            {users} <BsFillPeopleFill className="text-3xl" />{' '}
           </p>
 
           <Link to={`/dashboard/projects/${project.id}`}>

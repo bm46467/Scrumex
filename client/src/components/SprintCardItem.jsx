@@ -8,17 +8,17 @@ const SprintCardItem = ({ sprint, idx }) => {
 
   const [tasks, setTasks] = useState([])
 
-  useEffect(() => {
-    const getAllTaskFromSprint = async () => {
-      const { data } = await getAllSprintTasks(projectId, sprint.id)
-      setTasks(data)
-    }
+  // useEffect(() => {
+  //   const getAllTaskFromSprint = async () => {
+  //     const { data } = await getAllSprintTasks(projectId, sprint.id)
+  //     // setTasks(data)
+  //   }
 
-    getAllTaskFromSprint()
-  }, [])
+  //   getAllTaskFromSprint()
+  // }, [])
 
   return (
-    <div className="box-content border-0 rounded-lg w-24 bg-slate-200 my-5 p-3 md:w-28 xl:w-52">
+    <div className="box-content border-0 rounded-lg bg-slate-200 my-5 p-3">
       <p className="mt-1 ml-2 font-sans text-black text-sm lg:text-lg">
         {' '}
         Sprint #{idx + 1}{' '}
@@ -40,7 +40,7 @@ const SprintCardItem = ({ sprint, idx }) => {
       </p>
 
       <Link to={`/dashboard/projects/${projectId}/sprints/${sprint.id}`}>
-        <button className="btn-primary--filled mt-4 my-2 ml-2 px-1 py-2 lg:px-6">
+        <button className="btn-primary--filled mt-4 my-2 ml-2 px-4 py-2 lg:px-6 text-[14px] md:text-sm">
           {' '}
           SEE DETAILS{' '}
         </button>
