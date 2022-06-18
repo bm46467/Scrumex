@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -40,6 +41,8 @@ const CreateProjectModal = ({ setOpenModal }) => {
 
     reset()
     setLoading(false)
+    toast('Successfully created a new project!')
+    setOpenModal(false)
   }
 
   return (
