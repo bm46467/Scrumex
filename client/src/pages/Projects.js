@@ -51,8 +51,6 @@ const Projects = () => {
           </button>
         </div>
 
-        <ProjectCard projects={projects} />
-
         {loading ? (
           <Spinner color="text-indigo-500" />
         ) : (

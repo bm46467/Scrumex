@@ -33,8 +33,12 @@ const ProjectDetails = () => {
         <div className="box-content border border-4 rounded-lg w-5/6 border-white mt-3 bg-indigo-900 border-indigo-300">
           <ProjectDetailsItem project={project} />
 
+          <p className="text-gray-300 text-2xl ml-3 mt-4">
+            You have not participated in any sprint yet
+          </p>
+
           <div className="mx-auto box-content border-0 rounded-lg w-5/6 my-5 bg-slate-300 grid grid-cols-3 justify-items-center">
-            {sprints.map((sprint) => (
+            {sprints?.map((sprint) => (
               <SprintCardItem key={sprint.id} sprint={sprint} />
             ))}
           </div>
