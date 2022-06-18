@@ -34,3 +34,5 @@ export const createProject = ({ pmid, projectName, description, endingDate }) =>
   })
 
 export const getProjects = () => api.get('/projects')
+
+export const getProjectUsers = (projectId) => api.get(`/projects/${projectId}/users`)
