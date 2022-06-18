@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 import { object, string } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -36,6 +37,7 @@ const Login = () => {
   const onSubmit = async ({ email, password }) => {
     await login(email, password)
     reset()
+    toast('Successfully logged in!')
   }
 
   return (

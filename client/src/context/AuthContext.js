@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { getUser, loginUser, logoutUser, registerUser } from '../api'
 
 const AuthContext = createContext()
@@ -74,14 +75,12 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     setLoading(true)
-
     await logoutUser()
-
     setUser(undefined)
     setHasLogged(false)
     navigate('/')
-
     setLoading(false)
+    toast('Successfully logged out!')
   }
 
   const memoedValue = useMemo(
