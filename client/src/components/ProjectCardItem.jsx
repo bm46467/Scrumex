@@ -59,9 +59,6 @@ const ProjectCardItem = ({ project, projects, setProjects }) => {
             {users.length} <BsFillPeopleFill className="text-3xl" />{' '}
           </p>
 
-       <Link to={`/dashboard/projects/${project.id}`}> 
-            <button className="btn-primary--filled mx-3 my-4 px-12"> SEE DETAILS </button>
-       </Link>
           <Link to={`/dashboard/projects/${project.id}`}>
             <button className="btn-primary--filled mx-3 my-4 px-12">
               {' '}
