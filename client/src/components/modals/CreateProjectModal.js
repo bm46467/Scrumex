@@ -16,7 +16,7 @@ const schema = object({
   description: string().required('Description is required'),
 })
 
-const CreateProjectModal = ({ setOpenModal }) => {
+const CreateProjectModal = ({ setOpenModal, projects, setProjects }) => {
   const [loading, setLoading] = useState(false)
 
   const { user } = useAuth()
@@ -33,12 +33,14 @@ const CreateProjectModal = ({ setOpenModal }) => {
   const handleClick = async ({ projectName, description }) => {
     setLoading(true)
 
-    await createProject({
+    const { data: newProject } = await createProject({
       pmid: user.id,
       projectName,
       description,
       endingDate: '2022-11-11 13:23:44',
     })
+
+    setProjects([...projects, newProject])
 
     reset()
     setLoading(false)
