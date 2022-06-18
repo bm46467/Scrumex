@@ -36,3 +36,9 @@ export const createProject = ({ pmid, projectName, description, endingDate }) =>
 export const getProjects = () => api.get('/projects')
 
 export const getProjectUsers = (projectId) => api.get(`/projects/${projectId}/users`)
+
+export const getAllSprints = (projectId) => api.get(`projects/${projectId}/sprints`)
+
+export const getProject = (projectId) => api.get(`projects/${projectId}`)
+
+export const getAllSprintTasks = (projectId, sprintId) => api.get(`projects/${projectId}/sprints/${sprintId}/tasks`)

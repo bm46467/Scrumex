@@ -29,7 +29,7 @@ const ProjectCardItem = ({ project }) => {
 
        <p className='flex flex-row gap-4 mt-2 ml-3 font-sans text-lg'> {users.length} <BsFillPeopleFill className="text-3xl" /> </p>
 
-       <Link to={`/project/${project.id}`}> 
+       <Link to={`/dashboard/projects/${project.id}`}> 
             <button className="btn-primary--filled mx-3 my-4 px-12"> SEE DETAILS </button>
        </Link>
     </div>

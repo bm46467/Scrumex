@@ -37,6 +37,7 @@ const Projects = () => {
         </div>
 
         <ProjectCard projects={projects} />
+      
       </div>
     </>
   )
