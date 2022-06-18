@@ -36,7 +36,7 @@ const Navbar = () => {
       px-6 py-4"
         >
           <h1 className="text-gray-200 text-2xl font-bold cursor-pointer">
-            <a href="/"> Scrumex</a>
+            <Link to="/"> Scrumex</Link>
           </h1>
 
           {showMobileMenu ? (
