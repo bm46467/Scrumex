@@ -42,3 +42,7 @@ export const getAllSprints = (projectId) => api.get(`projects/${projectId}/sprin
 export const getProject = (projectId) => api.get(`projects/${projectId}`)
 
 export const getAllSprintTasks = (projectId, sprintId) => api.get(`projects/${projectId}/sprints/${sprintId}/tasks`)
+
+export const getProjectUsers = (projectId) => api.get(`/projects/${projectId}/users`)
+
+export const deleteProject = (projectId) => api.delete(`/projects/${projectId}`)
