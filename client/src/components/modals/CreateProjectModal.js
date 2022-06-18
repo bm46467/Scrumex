@@ -1,23 +1,45 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { object, string } from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { GrFormClose } from 'react-icons/gr'
 import { createProject } from '../../api'
 import { useAuth } from '../../context'
 
+import Spinner from '../Spinner'
+
+const schema = object({
+  projectName: string().required('Project name is required'),
+  description: string().required('Description is required'),
+})
+
 const CreateProjectModal = ({ setOpenModal }) => {
-  const [name, setName] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const { user } = useAuth()
 
-  const handleClick = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+
+  const handleClick = async ({ projectName, description }) => {
+    setLoading(true)
+
     await createProject({
       pmid: user.id,
-      projectName: name,
-      description: 'Desc',
+      projectName,
+      description,
       endingDate: '2022-11-11 13:23:44',
     })
 
-    setName('')
+    reset()
+    setLoading(false)
   }
 
   return (
@@ -35,34 +57,67 @@ const CreateProjectModal = ({ setOpenModal }) => {
           Create a project
         </h3>
 
-        <div className="w-full px-8 flex flex-col gap-4">
-          <div className="relative mt-2 w-full">
-            <input
-              id="projectName"
-              name="projectName"
-              className="peer w-full h-11 border-b-2 bg-transparent
-              border-gray-400
-                focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-800"
-              type="text"
-              placeholder="Team name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label
-              htmlFor="projectName"
-              className="form-label peer-placeholder-shown:text-gray-400"
-            >
-              Project Name
-            </label>
-          </div>
-
-          <button
-            className="btn-primary--filled mt-6 px-12"
-            onClick={handleClick}
+        {loading ? (
+          <Spinner color="text-indigo-500" />
+        ) : (
+          <form
+            className="w-full px-8 flex flex-col gap-4"
+            onSubmit={handleSubmit(handleClick)}
           >
-            Create
-          </button>
-        </div>
+            <div className="relative mt-2 w-full">
+              <input
+                id="projectName"
+                name="projectName"
+                className={`peer w-full h-11 border-b-2 bg-transparent
+              border-gray-400
+                focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-800 ${
+                  errors?.projectName?.message && 'focus:border-red-800'
+                }`}
+                type="text"
+                placeholder="Project Name"
+                {...register('projectName')}
+              />
+              <label
+                htmlFor="projectName"
+                className="form-label peer-placeholder-shown:text-gray-400"
+              >
+                Project Name
+              </label>
+
+              <span className="text-red-800 inline-block pt-2">
+                {errors?.projectName?.message}
+              </span>
+            </div>
+            <div className="relative mt-2 w-full">
+              <input
+                id="description"
+                name="description"
+                className={`peer w-full h-11 border-b-2 bg-transparent
+              border-gray-400
+                focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-800 ${
+                  errors?.description?.message && 'focus:border-red-800'
+                }`}
+                type="text"
+                placeholder="Team name"
+                {...register('description')}
+              />
+              <label
+                htmlFor="description"
+                className="form-label peer-placeholder-shown:text-gray-400"
+              >
+                Description
+              </label>
+
+              <span className="text-red-800 inline-block pt-2">
+                {errors?.description?.message}
+              </span>
+            </div>
+
+            <button type="submit" className="btn-primary--filled mt-6 px-12">
+              Create
+            </button>
+          </form>
+        )}
       </div>
     </div>
   )
