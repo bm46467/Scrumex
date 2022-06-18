@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const Hero = () => {
   return (
@@ -7,7 +8,11 @@ const Hero = () => {
       className="flex flex-col items-center md:flex-row gap-6 max-w-[900px] 
     mx-auto mt-8 text-center px-6 py-4 pt-20"
     >
-      <div className="flex flex-col items-center gap-6  md:items-start md:w-1/2 md:mt-12">
+      <motion.div
+        className="flex flex-col items-center gap-6  md:items-start md:w-1/2 md:mt-12"
+        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, x: -100 }}
+      >
         <h2
           className="max-w-[300px] text-gray-200 md:max-w-full text-3xl md:text-4xl 
         md:text-left"
@@ -23,11 +28,15 @@ const Hero = () => {
         <Link to="/register">
           <button className="btn-primary--filled px-8">Get started</button>
         </Link>
-      </div>
+      </motion.div>
 
-      <div className="max-w-[400px] mx-auto">
+      <motion.div
+        className="max-w-[400px] mx-auto"
+        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, x: 100 }}
+      >
         <img src="./images/scrum_board.svg" alt="Scrum board" />
-      </div>
+      </motion.div>
     </section>
   )
 }

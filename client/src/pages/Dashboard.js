@@ -1,4 +1,5 @@
 import { Navigate, Routes, Route } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import { useAuth } from '../context'
 
@@ -17,7 +18,11 @@ const Dashboard = () => {
     const { user } = useAuth()
 
     return (
-      <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
+      <motion.div
+        className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
+        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: -50 }}
+      >
         <h2 className="text-gray-500 text-3xl">Dashboard</h2>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 mt-8 max-w-[1000px] mx-auto">
@@ -81,7 +86,7 @@ const Dashboard = () => {
             alt="Trends"
           />
         </div>
-      </div>
+      </motion.div>
     )
   }
 

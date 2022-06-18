@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import { MdOutlineSpaceDashboard } from 'react-icons/md'
 import { FaProjectDiagram } from 'react-icons/fa'
@@ -37,7 +38,11 @@ const Sidebar = () => {
       </div>
 
       {showSidebar && (
-        <div className="fixed top-20 md:w-[250px] bottom-0 rounded-tr-3xl rounded-br-3xl bg-indigo-900">
+        <motion.div
+          className="fixed top-20 md:w-[250px] bottom-0 rounded-tr-3xl rounded-br-3xl bg-indigo-900"
+          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -100 }}
+        >
           <nav className="flex justify-center">
             <ul className="flex flex-col items-center mt-36 w-full">
               <NavLink
@@ -48,7 +53,7 @@ const Sidebar = () => {
                     : 'border-transparent'
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <MdOutlineSpaceDashboard className="text-3xl text-indigo-500" />{' '}
+                <MdOutlineSpaceDashboard className="text-3xl text-indigo-400" />{' '}
                 Dashboard
               </NavLink>
               <NavLink
@@ -59,7 +64,7 @@ const Sidebar = () => {
                     : 'border-transparent'
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <FaProjectDiagram className="text-3xl text-indigo-500" />{' '}
+                <FaProjectDiagram className="text-3xl text-indigo-400" />{' '}
                 Projects
               </NavLink>
               <NavLink
@@ -70,7 +75,7 @@ const Sidebar = () => {
                     : 'border-transparent'
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <BsFillPeopleFill className="text-3xl text-indigo-500" /> Teams
+                <BsFillPeopleFill className="text-3xl text-indigo-400" /> Teams
               </NavLink>
               <NavLink
                 to="leaderboard"
@@ -80,7 +85,7 @@ const Sidebar = () => {
                     : 'border-transparent'
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <BsBarChartFill className="text-3xl text-indigo-500" />{' '}
+                <BsBarChartFill className="text-3xl text-indigo-400" />{' '}
                 Leaderboard
               </NavLink>
               <NavLink
@@ -91,11 +96,11 @@ const Sidebar = () => {
                     : 'border-transparent'
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <AiFillSetting className="text-3xl text-indigo-500" /> Settings
+                <AiFillSetting className="text-3xl text-indigo-400" /> Settings
               </NavLink>
             </ul>
           </nav>
-        </div>
+        </motion.div>
       )}
     </>
   )

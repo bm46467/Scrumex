@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 import { object, string } from 'yup'
@@ -41,11 +42,13 @@ const Login = () => {
   }
 
   return (
-    <form
+    <motion.form
       className="max-w-[290px] flex flex-col items-center border-2 
     border-gray-500 rounded-xl mx-auto mt-24 mb-12 p-8 gap-4 shadow-md"
       autoComplete="off"
       onSubmit={handleSubmit(onSubmit)}
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 100 }}
     >
       <LockClosedIcon className="h-7 text-indigo-400" />
 
@@ -113,7 +116,7 @@ const Login = () => {
           </div>
         </>
       )}
-    </form>
+    </motion.form>
   )
 }
 
