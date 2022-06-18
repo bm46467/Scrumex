@@ -1,8 +1,14 @@
+import { motion } from 'framer-motion'
+
 import { GrFormClose } from 'react-icons/gr'
 
 const CreateTeamModal = ({ setOpenModal }) => {
   return (
-    <div className="fixed inset-0 grid place-items-center bg-transparent z-30">
+    <motion.div
+      className="fixed inset-0 grid place-items-center bg-transparent z-30"
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 50 }}
+    >
       {/* Overlay */}
       <div className="fixed inset-0 bg-gray-900 opacity-75"></div>
 
@@ -54,7 +60,7 @@ const CreateTeamModal = ({ setOpenModal }) => {
           <button className="btn-primary--filled mt-6 px-12">Create</button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

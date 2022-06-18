@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 import { object, string } from 'yup'
@@ -46,7 +47,11 @@ const CreateProjectModal = ({ setOpenModal }) => {
   }
 
   return (
-    <div className="fixed inset-0 grid place-items-center bg-transparent z-30">
+    <motion.div
+      className="fixed inset-0 grid place-items-center bg-transparent z-30"
+      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 50 }}
+    >
       {/* Overlay */}
       <div className="fixed inset-0 bg-gray-900 opacity-75"></div>
 
@@ -122,7 +127,7 @@ const CreateProjectModal = ({ setOpenModal }) => {
           </form>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }
 
