@@ -25,13 +25,13 @@ use App\Models\User;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('/users', function(){
+Route::get('/users', function () {
     return User::all();
 });
-Route::get('/users/{userId}', function($id){
+Route::get('/users/{userId}', function ($id) {
     return User::find($id);
 });
-Route::delete('users/{userId}', function($id){
+Route::delete('users/{userId}', function ($id) {
     $res = User::find($id)->delete();
 });
 #Get Projects
@@ -81,7 +81,7 @@ Route::delete('teams/{teamId}', [TeamController::class, 'removeTeam']);
 #Remove user from team
 Route::delete('teams/{teamId}/users/{userId}', [TeamController::class, 'deleteUserFromTeam']);
 
-Route::post('/users/{userId}/trophy', function($id){
+Route::post('/users/{userId}/trophy', function ($id) {
     return User::find($id);
 });
 

@@ -1,19 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { AiOutlinePlus } from 'react-icons/ai'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
+import { getProjects } from '../api'
 
 import { CreateProjectModal } from '../components'
 
 const Projects = () => {
+  // const [projects, setProjects] = useState([])
   const [showItems, setShowItems] = useState(true)
   const [showItemsSecond, setShowItemsSecond] = useState(true)
   const [openModal, setOpenModal] = useState(false)
 
+  // useEffect(() => {
+  //   const getAllProjects = async () => {
+  //     const { data } = await getProjects()
+  //     setProjects(data)
+  //   }
+
+  //   getAllProjects()
+  // }, [])
+
+  // console.log(projects)
+
   return (
     <>
       {openModal && <CreateProjectModal setOpenModal={setOpenModal} />}
-
       <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
         <div className="flex justify-between space-x-1">
           <h2 className="text-gray-500 text-3xl"> Projects </h2>

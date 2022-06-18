@@ -23,3 +23,14 @@ export const loginUser = ({ email, password }) =>
 export const getUser = () => api.get('/user')
 
 export const logoutUser = () => api.post('/logout')
+
+// Projects
+export const createProject = ({ pmid, projectName, description, endingDate }) =>
+  api.post('/projects', {
+    pmid,
+    projectName,
+    description,
+    endingDate,
+  })
+
+export const getProjects = () => api.get('/projects')

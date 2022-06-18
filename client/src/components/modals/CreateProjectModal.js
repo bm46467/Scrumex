@@ -1,6 +1,25 @@
+import { useState } from 'react'
+
 import { GrFormClose } from 'react-icons/gr'
+import { createProject } from '../../api'
+import { useAuth } from '../../context'
 
 const CreateProjectModal = ({ setOpenModal }) => {
+  const [name, setName] = useState('')
+
+  const { user } = useAuth()
+
+  const handleClick = async () => {
+    await createProject({
+      pmid: user.id,
+      projectName: name,
+      description: 'Desc',
+      endingDate: '2022-11-11 13:23:44',
+    })
+
+    setName('')
+  }
+
   return (
     <div className="fixed inset-0 grid place-items-center bg-transparent z-30">
       {/* Overlay */}
@@ -26,6 +45,8 @@ const CreateProjectModal = ({ setOpenModal }) => {
                 focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-800"
               type="text"
               placeholder="Team name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <label
               htmlFor="projectName"
@@ -35,7 +56,12 @@ const CreateProjectModal = ({ setOpenModal }) => {
             </label>
           </div>
 
-          <button className="btn-primary--filled mt-6 px-12">Create</button>
+          <button
+            className="btn-primary--filled mt-6 px-12"
+            onClick={handleClick}
+          >
+            Create
+          </button>
         </div>
       </div>
     </div>
