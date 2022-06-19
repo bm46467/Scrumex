@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getAllSprintTasks } from '../api'
+// import { getAllSprintTasks } from '../api'
 
 const SprintCardItem = ({ sprint, idx }) => {
   let { projectId } = useParams()
@@ -11,7 +11,7 @@ const SprintCardItem = ({ sprint, idx }) => {
   // useEffect(() => {
   //   const getAllTasksFromSprint = async () => {
   //     const { data } = await getAllSprintTasks(projectId, sprint.id)
-  //     // setTasks(data)
+  //     setTasks(data)
   //   }
 
   //   getAllTasksFromSprint()

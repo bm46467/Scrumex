@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getProject, getAllSprints, getProjectUsers } from '../api'
+import { getProject, getAllSprints} from '../api'
 import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
 import { useParams } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'

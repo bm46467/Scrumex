@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { toast } from 'react-toastify'
 
@@ -14,7 +14,6 @@ const CreateProjectModal = ({ setOpenEmployeeModal }) => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const { user } = useAuth()
   const { projectId } = useParams()
 
   const filterUsers = async (value) => {
