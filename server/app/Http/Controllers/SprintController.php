@@ -19,7 +19,7 @@ class SprintController extends Controller
         return Project::find($pid)->sprints->where("id", "=", $sid);
     }
 
-    public function getAllSprintTasks($sid)
+    public function getAllSprintTasks($pid, $sid)
     {
         return Sprint::find($sid)->tasks;
     }

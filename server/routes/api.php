@@ -31,6 +31,15 @@ Route::get('/users', function () {
 Route::get('/users/{userId}', function ($id) {
     return User::find($id);
 });
+Route::patch('/users/{userId}', function ($id, Request $request) {
+    $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+    ]);
+    $res = User::find($id);
+    $res->update($request->all());
+    return $res;
+});
 Route::delete('users/{userId}', function ($id) {
     $res = User::find($id)->delete();
 });

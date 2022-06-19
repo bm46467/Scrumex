@@ -74,7 +74,19 @@ export const createSprint = (projectId, startDate, stopDate, interval) =>
 export const getSpecificSprint = (projectId, sprintId) =>
   api.get(`projects/${projectId}/sprints/${sprintId}`)
 
-export const updateStatus = (projectId, sprintId, taskId) =>
-  api.patch(`projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`, {
-    status: 'done',
+// Tasks
+export const createTask = (projectId, sprintId, userId, description) =>
+  api.post(`/projects/${projectId}/sprints/${sprintId}/tasks`, {
+    description,
+    status: 'to do',
+    user_id: userId,
+    sprint_id: sprintId,
   })
+
+export const updateStatus = (projectId, sprintId, taskId, status) =>
+  api.patch(`projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`, {
+    status,
+  })
+
+export const deleteTask = (projectId, sprintId, taskId) =>
+  api.delete(`/projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`)

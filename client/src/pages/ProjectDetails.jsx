@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { getProject, getAllSprints} from '../api'
+import { getProject, getAllSprints } from '../api'
 import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
 import { useParams } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'
 import CreateSprintModal from '../components/modals/CreateSprintModal'
 import AddEmployeeModal from '../components/modals/AddEmployeeModal'
+import { motion } from 'framer-motion'
+import { useAuth } from '../context'
 
 const ProjectDetails = () => {
   const { projectId } = useParams()
@@ -13,6 +15,8 @@ const ProjectDetails = () => {
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [openEmployeeModal, setOpenEmployeeModal] = useState(false)
+
+  const { user } = useAuth()
 
   useEffect(() => {
     const getSpecificProject = async () => {
@@ -45,19 +49,25 @@ const ProjectDetails = () => {
         />
       )}
 
-      <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
+      <motion.div
+        className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
+        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: -50 }}
+      >
         <div className="flex justify-between space-x-1">
           <h2 className="text-gray-500 text-3xl"> Project details </h2>
         </div>
 
-        <div className="flex mt-8 mb-6">
-          <button
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
-            onClick={() => setOpenEmployeeModal(true)}
-          >
-            <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
-          </button>
-        </div>
+        {user.id === project.pmid && (
+          <div className="flex mt-8 mb-6">
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+              onClick={() => setOpenEmployeeModal(true)}
+            >
+              <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
+            </button>
+          </div>
+        )}
 
         <div className="box-content border border-4 rounded-lg w-5/6 border-white mt-3 bg-indigo-900 border-indigo-300">
           <ProjectDetailsItem project={project} />
@@ -78,22 +88,26 @@ const ProjectDetails = () => {
             ) : (
               <>
                 {sprints?.map((sprint, idx) => (
-                  <SprintCardItem key={sprint.id} sprint={sprint} idx={idx} />
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <SprintCardItem key={sprint.id} sprint={sprint} idx={idx} />
+                  </motion.div>
                 ))}
               </>
             )}
           </div>
         </div>
 
-        <div className="flex mt-8 mb-6">
-          <button
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
-            onClick={() => setOpenModal(true)}
-          >
-            <AiOutlinePlus className="inline-block text-2xl" /> Create Sprint
-          </button>
-        </div>
-      </div>
+        {user.id === project.pmid && (
+          <div className="flex mt-8 mb-6">
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+              onClick={() => setOpenModal(true)}
+            >
+              <AiOutlinePlus className="inline-block text-2xl" /> Create Sprint
+            </button>
+          </div>
+        )}
+      </motion.div>
     </>
   )
 }

@@ -1,51 +1,81 @@
 import { useEffect, useState } from 'react'
-import { updateStatus, getAllSprintTasks } from '../api'
+import { updateStatus, getAllSprintTasks, getUser } from '../api'
 import { useParams } from 'react-router-dom'
 import Spinner from './Spinner'
+import { toast } from 'react-toastify'
+import Moment from 'react-moment'
 
-const InProgressTaskItem = ({ task, idx, setInProgressTasks, inProgressTasks, setDoneTasks, doneTasks }) => {
+const InProgressTaskItem = ({
+  task,
+  idx,
+  setInProgressTasks,
+  inProgressTasks,
+  setDoneTasks,
+  doneTasks,
+}) => {
+  const { projectId } = useParams()
+  const { sprintId } = useParams()
+  const [loading, setLoading] = useState(false)
+  const [taskCreator, setTaskCreator] = useState('')
 
-    const { projectId } = useParams()
-    const { sprintId } = useParams()
-    const [loading, setLoading] = useState(false)
+  const changeStatus = () => {
+    const updateTaskStatus = async () => {
+      setLoading(true)
+      const { data } = await updateStatus(projectId, sprintId, task.id, 'done')
 
-    const ChangeStatus = () => {
-        const updateTaskStatus = async () => {
-            setLoading(true)
-            const { data } = await updateStatus(projectId, sprintId, task.id)
-            
-            setInProgressTasks(inProgressTasks.filter(t => t.id !== task.id))
-            setDoneTasks([...doneTasks, data])
-            setLoading(false)
-        }
-
-        updateTaskStatus()
+      setInProgressTasks(inProgressTasks.filter((t) => t.id !== task.id))
+      setDoneTasks([...doneTasks, data])
+      toast('Task was done successfully!')
+      setLoading(false)
     }
+
+    updateTaskStatus()
+  }
+
+  useEffect(() => {
+    const getTaskUser = async () => {
+      const { data } = await getUser(task.user_id)
+      setTaskCreator(data.first_name + ' ' + data.last_name)
+    }
+
+    getTaskUser()
+  }, [])
 
   return (
     <>
-    { loading ? (
+      {loading ? (
         <div className="p-4">
-            <Spinner color="text-indigo-500" />
+          <Spinner color="text-indigo-500" />
         </div>
-    ) : (
-    <div className='mt-4 ml-2'>
-        <div className="box-content border-0 rounded-lg bg-slate-200 my-5 p-2">
+      ) : (
+        <div className="mt-4 ml-2">
+          <div className="box-content border-0 rounded-lg bg-slate-200 my-5 p-2">
             <p className="mt-1 ml-2 font-sans text-black text-sm lg:text-xl">
-                Task #{idx + 1}
+              Task #{idx + 1}
             </p>
 
             <p className="mt-1 ml-2 font-sans text-zinc-400 text-sm lg:text-lg">
-                {task.description}
+              {task.description}
             </p>
 
-            <button className='btn-primary--filled mt-8 ml-2 px-4 py-2 lg:px-6 text-[14px] md:text-sm'
-            onClick={ChangeStatus}>
-                MARK AS DONE
+            <p className="mt-1 ml-2 font-sans text-zinc-400 text-sm lg:text-lg">
+              Created:{' '}
+              <Moment fromNow>{new Date(task.created_at).getTime()}</Moment>
+            </p>
+
+            <p className="mt-1 ml-2 font-sans text-zinc-400 text-sm lg:text-lg">
+              by {taskCreator}
+            </p>
+
+            <button
+              className="btn-primary--filled from-green-600 to-green-600 mt-8 ml-2 px-4 py-2 lg:px-6 text-[14px] md:text-sm"
+              onClick={changeStatus}
+            >
+              MARK AS DONE
             </button>
+          </div>
         </div>
-    </div>
-    )}
+      )}
     </>
   )
 }
