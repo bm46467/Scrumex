@@ -27,6 +27,8 @@ export const logoutUser = () => api.post('/logout')
 // Users
 export const getUsers = () => api.get('/users')
 
+export const deleteUser = (userId) => api.delete(`/users/${userId}`)
+
 // Projects
 export const createProject = ({ pmid, projectName, description, endingDate }) =>
   api.post('/projects', {
