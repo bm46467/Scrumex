@@ -9,12 +9,12 @@ const SprintCardItem = ({ sprint, idx }) => {
   const [tasks, setTasks] = useState([])
 
   // useEffect(() => {
-  //   const getAllTaskFromSprint = async () => {
+  //   const getAllTasksFromSprint = async () => {
   //     const { data } = await getAllSprintTasks(projectId, sprint.id)
   //     // setTasks(data)
   //   }
 
-  //   getAllTaskFromSprint()
+  //   getAllTasksFromSprint()
   // }, [])
 
   return (

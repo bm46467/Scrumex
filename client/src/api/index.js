@@ -62,3 +62,5 @@ export const createSprint = (projectId, startDate, stopDate, interval) =>
     stopDate,
     interval,
   })
+
+export const getSpecificSprint = (projectId, sprintId) => api.get(`projects/${projectId}/sprints/${sprintId}`);
