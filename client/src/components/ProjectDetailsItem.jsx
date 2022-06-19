@@ -1,5 +1,4 @@
 import { BsFillPeopleFill } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getProjectUsers } from '../api'
 

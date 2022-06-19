@@ -66,3 +66,7 @@ export const createSprint = (projectId, startDate, stopDate, interval) =>
   })
 
 export const getSpecificSprint = (projectId, sprintId) => api.get(`projects/${projectId}/sprints/${sprintId}`);
+
+export const updateStatus = (projectId, sprintId, taskId) => api.patch(`projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`, {
+  status: 'done',
+})
