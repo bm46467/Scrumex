@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrFormClose } from 'react-icons/gr'
 import { Spinner } from '../components'
-import { deleteUser } from '../api'
+import { deleteUser, updateUser } from '../api'
 
 const schema = object({
   firstName: string().required('First name is required'),
@@ -99,7 +99,7 @@ const Settings = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
 
   const {
     register,
@@ -116,7 +116,8 @@ const Settings = () => {
 
   const handleUpdate = async ({ firstName, lastName }) => {
     setLoading(true)
-    console.log(firstName, lastName)
+    const { data } = await updateUser(user.id, firstName, lastName)
+    setUser(data)
     reset()
     toast('Successfully updated your profile data!')
     setLoading(false)
@@ -139,67 +140,73 @@ const Settings = () => {
           Change your profile data
         </p>
 
-        <form
-          className="w-full mt-5 flex flex-col gap-4"
-          onSubmit={handleSubmit(handleUpdate)}
-        >
-          <div className="relative mt-2 w-full">
-            <input
-              id="firstName"
-              name="firstName"
-              className={`peer h-11 border-b-2 bg-transparent
+        {loading ? (
+          <div>
+            <Spinner color="text-indigo-500" />
+          </div>
+        ) : (
+          <form
+            className="w-full mt-5 flex flex-col gap-4"
+            onSubmit={handleSubmit(handleUpdate)}
+          >
+            <div className="relative mt-2 w-full">
+              <input
+                id="firstName"
+                name="firstName"
+                className={`peer h-11 border-b-2 bg-transparent
               border-gray-400
                 focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-100 ${
                   errors?.firstName?.message && 'focus:border-red-800'
                 }`}
-              type="text"
-              placeholder="First Name"
-              {...register('firstName')}
-            />
-            <label
-              htmlFor="firstName"
-              className="form-label peer-placeholder-shown:text-gray-400"
-            >
-              First Name
-            </label>
+                type="text"
+                placeholder="First Name"
+                {...register('firstName')}
+              />
+              <label
+                htmlFor="firstName"
+                className="form-label peer-placeholder-shown:text-gray-400"
+              >
+                First Name
+              </label>
 
-            <span className="text-red-800 block pt-2">
-              {errors?.firstName?.message}
-            </span>
-          </div>
+              <span className="text-red-800 block pt-2">
+                {errors?.firstName?.message}
+              </span>
+            </div>
 
-          <div className="relative mt-2 w-full">
-            <input
-              id="lastName"
-              name="lastName"
-              className={`peer h-11 border-b-2 bg-transparent
+            <div className="relative mt-2 w-full">
+              <input
+                id="lastName"
+                name="lastName"
+                className={`peer h-11 border-b-2 bg-transparent
               border-gray-400
                 focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-100 ${
                   errors?.lastName?.message && 'focus:border-red-800'
                 }`}
-              type="text"
-              placeholder="Last Name"
-              {...register('lastName')}
-            />
-            <label
-              htmlFor="lastName"
-              className="form-label peer-placeholder-shown:text-gray-400"
+                type="text"
+                placeholder="Last Name"
+                {...register('lastName')}
+              />
+              <label
+                htmlFor="lastName"
+                className="form-label peer-placeholder-shown:text-gray-400"
+              >
+                Last Name
+              </label>
+
+              <span className="text-red-800 block pt-2">
+                {errors?.lastName?.message}
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              className="btn-primary--filled mt-6 px-12 max-w-[200px]"
             >
-              Last Name
-            </label>
-
-            <span className="text-red-800 block pt-2">
-              {errors?.lastName?.message}
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            className="btn-primary--filled mt-6 px-12 max-w-[200px]"
-          >
-            Update
-          </button>
-        </form>
+              Update
+            </button>
+          </form>
+        )}
 
         <button
           type="submit"
