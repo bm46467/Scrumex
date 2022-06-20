@@ -27,6 +27,14 @@ export const logoutUser = () => api.post('/logout')
 // Users
 export const getUsers = () => api.get('/users')
 
+export const deleteUser = (userId) => api.delete(`/users/${userId}`)
+
+export const updateUser = (userId, first_name, last_name) =>
+  api.patch(`/users/${userId}`, {
+    first_name,
+    last_name,
+  })
+
 // Projects
 export const createProject = ({ pmid, projectName, description, endingDate }) =>
   api.post('/projects', {
@@ -63,4 +71,22 @@ export const createSprint = (projectId, startDate, stopDate, interval) =>
     interval,
   })
 
-export const getSpecificSprint = (projectId, sprintId) => api.get(`projects/${projectId}/sprints/${sprintId}`);
+export const getSpecificSprint = (projectId, sprintId) =>
+  api.get(`projects/${projectId}/sprints/${sprintId}`)
+
+// Tasks
+export const createTask = (projectId, sprintId, userId, description) =>
+  api.post(`/projects/${projectId}/sprints/${sprintId}/tasks`, {
+    description,
+    status: 'to do',
+    user_id: userId,
+    sprint_id: sprintId,
+  })
+
+export const updateStatus = (projectId, sprintId, taskId, status) =>
+  api.patch(`projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`, {
+    status,
+  })
+
+export const deleteTask = (projectId, sprintId, taskId) =>
+  api.delete(`/projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`)

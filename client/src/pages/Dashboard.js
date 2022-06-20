@@ -8,7 +8,7 @@ import { GiTrophy } from "react-icons/gi";
 import Sidebar from "../components/Sidebar";
 
 import { Projects, Teams, Leaderboard, Settings } from ".";
-import { ProjectDetails } from "../pages";
+import { ProjectDetails, SprintDetails } from '../pages'
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -89,17 +89,18 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Sidebar />
-      <Routes>
-        <Route path="/" element={<DashboardContent />} />{" "}
-        <Route path="/projects" element={<Projects />} />{" "}
-        <Route path="/projects/:projectId" element={<ProjectDetails />} />{" "}
-        <Route path="/teams" element={<Teams />} />{" "}
-        <Route path="/leaderboard" element={<Leaderboard />} />{" "}
-        <Route path="/settings" element={<Settings />} />{" "}
-      </Routes>{" "}
-    </div>
-  );
-};
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<DashboardContent />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:projectId" element={<ProjectDetails />} />
+            <Route path="/projects/:projectId/sprints/:sprintId" element={<SprintDetails />} />
+            <Route path="/teams" element={<Teams />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </div>
+  )
+}
 
-export default Dashboard;
+export default Dashboard

@@ -5,7 +5,6 @@ import { toast } from 'react-toastify'
 
 import { GrFormClose } from 'react-icons/gr'
 import { createSprint } from '../../api'
-import { useAuth } from '../../context'
 
 import Spinner from '../Spinner'
 
@@ -15,7 +14,6 @@ const CreateSprintModal = ({ setOpenModal, sprints, setSprints }) => {
   const [interval, setInterval] = useState(14)
   const [loading, setLoading] = useState(false)
 
-  const { user } = useAuth()
   const { projectId } = useParams()
 
   useEffect(() => {
