@@ -1,34 +1,34 @@
-import { motion } from 'framer-motion'
-import { toast } from 'react-toastify'
-import { object, string } from 'yup'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from '../context'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { GrFormClose } from 'react-icons/gr'
-import { Spinner } from '../components'
-import { deleteUser, updateUser } from '../api'
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { object, string } from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "../context";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GrFormClose } from "react-icons/gr";
+import { Spinner } from "../components";
+import { deleteUser, updateUser } from "../api";
 
 const schema = object({
-  firstName: string().required('First name is required'),
-  lastName: string().required('Last name is required'),
-})
+  firstName: string().required("First name is required"),
+  lastName: string().required("Last name is required"),
+});
 
 const DeleteModal = ({ setShowDeleteModal, userId }) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   const handleDelete = async () => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(async () => {
-      setLoading(false)
-      setShowDeleteModal(false)
-      logout()
-      await deleteUser(userId)
-    }, 3000)
-  }
+      setLoading(false);
+      setShowDeleteModal(false);
+      logout();
+      await deleteUser(userId);
+    }, 3000);
+  };
 
   return (
     <motion.div
@@ -91,15 +91,15 @@ const DeleteModal = ({ setShowDeleteModal, userId }) => {
         )}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
 const Settings = () => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const { user, setUser } = useAuth()
+  const { user, setUser } = useAuth();
 
   const {
     register,
@@ -108,21 +108,21 @@ const Settings = () => {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
-  })
+  });
 
   useEffect(() => {
-    reset({ firstName: user.first_name, lastName: user.last_name })
-  }, [user])
+    reset({ firstName: user.first_name, lastName: user.last_name });
+  }, [user]);
 
   const handleUpdate = async ({ firstName, lastName }) => {
-    setLoading(true)
-    const { data } = await updateUser(user.id, firstName, lastName)
-    setUser(data)
-    reset()
-    toast('Successfully updated your profile data!')
-    setLoading(false)
-    navigate('/dashboard')
-  }
+    setLoading(true);
+    const { data } = await updateUser(user.id, firstName, lastName);
+    setUser(data);
+    reset();
+    toast("Successfully updated your profile data!");
+    setLoading(false);
+    navigate("/dashboard");
+  };
 
   return (
     <>
@@ -135,7 +135,7 @@ const Settings = () => {
         animate={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -50 }}
       >
-        <h2 className="text-gray-500 text-3xl">Settings</h2>
+        <h2 className="text-gray-300 text-3xl">Settings</h2>
         <p className="text-3xl text-gray-300 mt-8 mb-8">
           Change your profile data
         </p>
@@ -156,11 +156,11 @@ const Settings = () => {
                 className={`peer h-11 border-b-2 bg-transparent
               border-gray-400
                 focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-100 ${
-                  errors?.firstName?.message && 'focus:border-red-800'
+                  errors?.firstName?.message && "focus:border-red-800"
                 }`}
                 type="text"
                 placeholder="First Name"
-                {...register('firstName')}
+                {...register("firstName")}
               />
               <label
                 htmlFor="firstName"
@@ -181,11 +181,11 @@ const Settings = () => {
                 className={`peer h-11 border-b-2 bg-transparent
               border-gray-400
                 focus:outline-none focus:border-indigo-600 placeholder-transparent text-gray-100 ${
-                  errors?.lastName?.message && 'focus:border-red-800'
+                  errors?.lastName?.message && "focus:border-red-800"
                 }`}
                 type="text"
                 placeholder="Last Name"
-                {...register('lastName')}
+                {...register("lastName")}
               />
               <label
                 htmlFor="lastName"
@@ -217,7 +217,7 @@ const Settings = () => {
         </button>
       </motion.div>
     </>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

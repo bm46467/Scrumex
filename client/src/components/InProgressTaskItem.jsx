@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import { updateStatus, getAllSprintTasks, getUser } from '../api'
-import { useParams } from 'react-router-dom'
-import Spinner from './Spinner'
-import { toast } from 'react-toastify'
-import Moment from 'react-moment'
+import { useEffect, useState } from "react";
+import { updateStatus, getAllSprintTasks, getUser } from "../api";
+import { useParams } from "react-router-dom";
+import Spinner from "./Spinner";
+import { toast } from "react-toastify";
+import Moment from "react-moment";
 
 const InProgressTaskItem = ({
   task,
@@ -13,33 +13,33 @@ const InProgressTaskItem = ({
   setDoneTasks,
   doneTasks,
 }) => {
-  const { projectId } = useParams()
-  const { sprintId } = useParams()
-  const [loading, setLoading] = useState(false)
-  const [taskCreator, setTaskCreator] = useState('')
+  const { projectId } = useParams();
+  const { sprintId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [taskCreator, setTaskCreator] = useState("");
 
   const changeStatus = () => {
     const updateTaskStatus = async () => {
-      setLoading(true)
-      const { data } = await updateStatus(projectId, sprintId, task.id, 'done')
+      setLoading(true);
+      const { data } = await updateStatus(projectId, sprintId, task.id, "done");
 
-      setInProgressTasks(inProgressTasks.filter((t) => t.id !== task.id))
-      setDoneTasks([...doneTasks, data])
-      toast('Task was done successfully!')
-      setLoading(false)
-    }
+      setInProgressTasks(inProgressTasks.filter((t) => t.id !== task.id));
+      setDoneTasks([...doneTasks, data]);
+      toast("Task was done successfully!");
+      setLoading(false);
+    };
 
-    updateTaskStatus()
-  }
+    updateTaskStatus();
+  };
 
   useEffect(() => {
     const getTaskUser = async () => {
-      const { data } = await getUser(task.user_id)
-      setTaskCreator(data.first_name + ' ' + data.last_name)
-    }
+      const { data } = await getUser(task.user_id);
+      setTaskCreator(data.first_name + " " + data.last_name);
+    };
 
-    getTaskUser()
-  }, [])
+    getTaskUser();
+  }, []);
 
   return (
     <>
@@ -49,7 +49,7 @@ const InProgressTaskItem = ({
         </div>
       ) : (
         <div className="mt-4 ml-2">
-          <div className="box-content border-0 rounded-lg bg-slate-200 my-5 p-2">
+          <div className="flex flex-col border-0 rounded-lg bg-slate-200 my-5 p-2">
             <p className="mt-1 ml-2 font-sans text-black text-sm lg:text-xl">
               Task #{idx + 1}
             </p>
@@ -59,7 +59,7 @@ const InProgressTaskItem = ({
             </p>
 
             <p className="mt-1 ml-2 font-sans text-zinc-400 text-sm lg:text-lg">
-              Created:{' '}
+              Created:{" "}
               <Moment fromNow>{new Date(task.created_at).getTime()}</Moment>
             </p>
 
@@ -68,7 +68,7 @@ const InProgressTaskItem = ({
             </p>
 
             <button
-              className="btn-primary--filled from-green-600 to-green-600 mt-8 ml-2 px-4 py-2 lg:px-6 text-[14px] md:text-sm"
+              className="btn-primary--filled from-green-600 to-green-600 mt-2 mx-auto px-8 py-2 lg:px-6 text-[8px] xl:text-[13px]"
               onClick={changeStatus}
             >
               MARK AS DONE
@@ -77,7 +77,7 @@ const InProgressTaskItem = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default InProgressTaskItem
+export default InProgressTaskItem;

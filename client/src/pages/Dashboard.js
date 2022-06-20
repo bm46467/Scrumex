@@ -8,7 +8,7 @@ import { GiTrophy } from "react-icons/gi";
 import Sidebar from "../components/Sidebar";
 
 import { Projects, Teams, Leaderboard, Settings } from ".";
-import { ProjectDetails, SprintDetails } from '../pages'
+import { ProjectDetails, SprintDetails } from "../pages";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -38,7 +38,7 @@ const Dashboard = () => {
               <div className="w-full h-6 bg-indigo-700 rounded-full"> </div>{" "}
               <span className="ml-2 text-gray-300"> 9 Lvl </span>{" "}
             </div>{" "}
-            <span className="text-lg text-gray-400"> 21.37 % Experience </span>{" "}
+            <span className="text-lg text-gray-400"> Experience: 2137 </span>{" "}
             <div className="flex items-center justify-center gap-4 mt-8">
               <div className="flex flex-col gap-3">
                 <span className="text-gray-100 text-2xl font-bold">
@@ -89,18 +89,21 @@ const Dashboard = () => {
 
   return (
     <div>
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<DashboardContent />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:projectId" element={<ProjectDetails />} />
-            <Route path="/projects/:projectId/sprints/:sprintId" element={<SprintDetails />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </div>
-  )
-}
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<DashboardContent />} />{" "}
+        <Route path="/projects" element={<Projects />} />{" "}
+        <Route path="/projects/:projectId" element={<ProjectDetails />} />{" "}
+        <Route
+          path="/projects/:projectId/sprints/:sprintId"
+          element={<SprintDetails />}
+        />{" "}
+        <Route path="/teams" element={<Teams />} />{" "}
+        <Route path="/leaderboard" element={<Leaderboard />} />{" "}
+        <Route path="/settings" element={<Settings />} />{" "}
+      </Routes>{" "}
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

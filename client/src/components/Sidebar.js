@@ -84,7 +84,7 @@ const Sidebar = () => {
                     : "border-transparent"
                 } hover:border-indigo-500 py-3 items-center px-6 lg:px-12 text-xl text-gray-50 font-medium cursor-pointer`}
               >
-                <AiFillSetting className="text-3xl text-indigo-400" />
+                <AiFillSetting className="text-5xl text-indigo-400" />
                 Leaderboard{" "}
               </NavLink>{" "}
               <NavLink
