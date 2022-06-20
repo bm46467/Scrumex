@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { updateStatus, getAllSprintTasks, deleteTask, getUser } from "../api";
-import { useParams } from "react-router-dom";
-import Spinner from "./Spinner";
-import { FaTrash } from "react-icons/fa";
-import { toast } from "react-toastify";
-import { useAuth } from "../context";
-import Moment from "react-moment";
+import { useEffect, useState } from 'react'
+import { updateStatus, getAllSprintTasks, deleteTask, getUser } from '../api'
+import { useParams } from 'react-router-dom'
+import Spinner from './Spinner'
+import { FaTrash } from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import { useAuth } from '../context'
+import Moment from 'react-moment'
 
 export const ToDoTaskItem = ({
   task,
@@ -17,44 +17,44 @@ export const ToDoTaskItem = ({
   inProgressTasks,
   setInProgressTasks,
 }) => {
-  const { projectId } = useParams();
-  const { sprintId } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [taskCreator, setTaskCreator] = useState("");
+  const { projectId } = useParams()
+  const { sprintId } = useParams()
+  const [loading, setLoading] = useState(false)
+  const [taskCreator, setTaskCreator] = useState('')
 
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   useEffect(() => {
     const getTaskUser = async () => {
-      const { data } = await getUser(task.user_id);
-      setTaskCreator(data.first_name + " " + data.last_name);
-    };
+      const { data } = await getUser(task.user_id)
+      setTaskCreator(data.first_name + ' ' + data.last_name)
+    }
 
-    getTaskUser();
-  }, []);
+    getTaskUser()
+  }, [])
 
   const changeInProgress = async () => {
-    setLoading(true);
+    setLoading(true)
     const { data } = await updateStatus(
       projectId,
       sprintId,
       task.id,
-      "in progress"
-    );
+      'in progress'
+    )
 
-    setToDoTasks(toDoTasks.filter((t) => t.id !== task.id));
-    setInProgressTasks([...inProgressTasks, data]);
-    toast("Successfully updated your task!");
-    setLoading(false);
-  };
+    setToDoTasks(toDoTasks.filter((t) => t.id !== task.id))
+    setInProgressTasks([...inProgressTasks, data])
+    toast('Successfully updated your task!')
+    setLoading(false)
+  }
 
   const handleDelete = async () => {
-    setLoading(true);
-    await deleteTask(projectId, sprintId, task.id);
-    setToDoTasks(toDoTasks.filter((el) => el.id !== task.id));
-    toast("Successfully deleted task!");
-    setLoading(false);
-  };
+    setLoading(true)
+    await deleteTask(projectId, sprintId, task.id)
+    setToDoTasks(toDoTasks.filter((el) => el.id !== task.id))
+    toast('Successfully deleted task!')
+    setLoading(false)
+  }
 
   return (
     <>
@@ -79,7 +79,7 @@ export const ToDoTaskItem = ({
               {task.description}
             </p>
             <p className="mt-1 ml-2 font-sans font-light text-zinc-400 text-sm lg:text-lg">
-              Created:{" "}
+              Created:{' '}
               <Moment fromNow>{new Date(task.created_at).getTime()}</Moment>
             </p>
 
@@ -99,7 +99,7 @@ export const ToDoTaskItem = ({
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ToDoTaskItem;
+export default ToDoTaskItem

@@ -22,6 +22,8 @@ export const loginUser = ({ email, password }) =>
 
 export const getUser = () => api.get('/user')
 
+export const getSpecificUser = (userId) => api.get(`/users/${userId}`)
+
 export const logoutUser = () => api.post('/logout')
 
 // Users
@@ -90,3 +92,8 @@ export const updateStatus = (projectId, sprintId, taskId, status) =>
 
 export const deleteTask = (projectId, sprintId, taskId) =>
   api.delete(`/projects/${projectId}/sprints/${sprintId}/tasks/${taskId}`)
+
+// Trophies
+export const getStats = () => api.get('/trophy')
+
+export const getTrophy = (userId) => api.get(`/trophy/${userId}`)

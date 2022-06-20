@@ -1,21 +1,21 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-// import { getAllSprintTasks } from '../api'
+import { getAllSprintTasks } from '../api'
 
 const SprintCardItem = ({ sprint, idx }) => {
   let { projectId } = useParams()
 
   const [tasks, setTasks] = useState([])
 
-  // useEffect(() => {
-  //   const getAllTasksFromSprint = async () => {
-  //     const { data } = await getAllSprintTasks(projectId, sprint.id)
-  //     setTasks(data)
-  //   }
+  useEffect(() => {
+    const getAllTasksFromSprint = async () => {
+      const { data } = await getAllSprintTasks(projectId, sprint.id)
+      setTasks(data)
+    }
 
-  //   getAllTasksFromSprint()
-  // }, [])
+    getAllTasksFromSprint()
+  }, [])
 
   return (
     <div className="flex flex-col shadow-xl rounded-lg bg-slate-200 p-6">

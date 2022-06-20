@@ -9,11 +9,16 @@ class Trophy extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'trophies';
+    protected $fillable = [
+        'user_id',
+        'amountOfTrophies',
+        'experience',
+        'level'
+    ];
 
     public function users()
     {
         return $this->belongsTo(User::class)->withTimestamps();
     }
-    
-    
 }

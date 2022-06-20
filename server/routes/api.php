@@ -40,13 +40,10 @@ Route::patch('/users/{userId}', function ($id, Request $request) {
     $res->update($request->all());
     return $res;
 });
-Route::delete('users/{userId}', function ($id) {
+Route::delete('/users/{userId}', function ($id) {
     $res = User::find($id)->delete();
 });
 
-Route::get('users/{userId}', function ($id) {
-    $res = User::find($id)->delete();
-});
 #Get Projects
 Route::get('projects', [ProjectController::class, 'getProjects']);
 #Get specific project
@@ -97,6 +94,10 @@ Route::delete('teams/{teamId}/users/{userId}', [TeamController::class, 'deleteUs
 Route::post('/users/{userId}/trophy', function ($id) {
     return User::find($id);
 });
+
+Route::get('/trophy', [TrophyController::class, 'getTrophies']);
+Route::get('/trophy/{user_id}', [TrophyController::class, 'getUserTrophy']);
+Route::patch('/trophy/{user_id}/{amount}', [TrophyController::class, 'addExpToUser']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'getUser']);

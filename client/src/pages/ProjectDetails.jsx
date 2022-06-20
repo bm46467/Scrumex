@@ -1,39 +1,41 @@
-import { useEffect, useState } from "react";
-import { getProject, getAllSprints, getProjectUsers } from "../api";
-import { ProjectDetailsItem, Spinner, SprintCardItem } from "../components";
-import { useParams } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
-import CreateSprintModal from "../components/modals/CreateSprintModal";
-import AddEmployeeModal from "../components/modals/AddEmployeeModal";
-import { motion } from "framer-motion";
-import { useAuth } from "../context";
+import { useEffect, useState } from 'react'
+import { getProject, getAllSprints, getProjectUsers } from '../api'
+import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
+import { useNavigate, useParams } from 'react-router-dom'
+import { AiOutlinePlus } from 'react-icons/ai'
+import CreateSprintModal from '../components/modals/CreateSprintModal'
+import AddEmployeeModal from '../components/modals/AddEmployeeModal'
+import { motion } from 'framer-motion'
+import { useAuth } from '../context'
+import { BsChevronLeft } from 'react-icons/bs'
 
 const ProjectDetails = () => {
-  const { projectId } = useParams();
-  const [sprints, setSprints] = useState([]);
-  const [project, setProject] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
+  const { projectId } = useParams()
+  const [sprints, setSprints] = useState([])
+  const [project, setProject] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false)
 
-  const { user } = useAuth();
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getSpecificProject = async () => {
-      const { data } = await getProject(projectId);
-      setProject(data);
-    };
+      const { data } = await getProject(projectId)
+      setProject(data)
+    }
 
     const getAllProjectSprints = async () => {
-      setLoading(true);
-      const { data } = await getAllSprints(projectId);
-      setSprints(data);
-      setLoading(false);
-    };
+      setLoading(true)
+      const { data } = await getAllSprints(projectId)
+      setSprints(data)
+      setLoading(false)
+    }
 
-    getAllProjectSprints();
-    getSpecificProject();
-  }, []);
+    getAllProjectSprints()
+    getSpecificProject()
+  }, [])
 
   return (
     <>
@@ -51,10 +53,18 @@ const ProjectDetails = () => {
 
       <div className="lg:ml-[300px] shadow-lg shadow-indigo-900 mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
         <motion.div
-          className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: -50 }}
         >
+          <div className="mb-6">
+            <p
+              className="flex gap-2 items-center text-lg text-indigo-400 cursor-pointer"
+              onClick={() => navigate('/dashboard/projects')}
+            >
+              <BsChevronLeft /> Go back to all projects
+            </p>
+          </div>
+
           <div className="flex justify-between space-x-1">
             <h2 className="text-gray-200 text-4xl"> Project details </h2>
           </div>
@@ -74,8 +84,8 @@ const ProjectDetails = () => {
             <ProjectDetailsItem project={project} />
 
             <p className="mt-6 ml-12 tracking-normal font-sans text-4xl">
-              {" "}
-              Sprints{" "}
+              {' '}
+              Sprints{' '}
             </p>
 
             {!sprints.length && (
@@ -122,7 +132,7 @@ const ProjectDetails = () => {
         </motion.div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProjectDetails;
+export default ProjectDetails

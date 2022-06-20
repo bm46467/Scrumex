@@ -35,6 +35,7 @@ const CreateTaskModal = ({ setOpenTaskModal, toDoTasks, setToDoTasks }) => {
     setLoading(true)
     const { data } = await createTask(projectId, sprintId, user.id, description)
     setToDoTasks([...toDoTasks, data])
+    console.log(data, 'xd')
     reset()
     setLoading(false)
     toast('Successfully added new task!')

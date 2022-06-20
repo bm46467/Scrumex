@@ -1,58 +1,58 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   Spinner,
   ToDoTaskItem,
   InProgressTaskItem,
   DoneTaskItem,
   ProjectDetailsItem,
-} from "../components";
-import { getAllSprintTasks, getProject } from "../api";
-import { motion } from "framer-motion";
-import { AiOutlinePlus } from "react-icons/ai";
-import CreateTaskModal from "../components/modals/CreateTaskModal";
+} from '../components'
+import { getAllSprintTasks, getProject } from '../api'
+import { motion } from 'framer-motion'
+import { AiOutlinePlus } from 'react-icons/ai'
+import CreateTaskModal from '../components/modals/CreateTaskModal'
+import { BsChevronLeft } from 'react-icons/bs'
 
 const SprintDetails = () => {
-  const { projectId } = useParams();
-  const { sprintId } = useParams();
-  const [tasks, setTasks] = useState([]);
-  const [project, setProject] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [openTaskModal, setOpenTaskModal] = useState(false);
+  const { projectId } = useParams()
+  const { sprintId } = useParams()
+  const [tasks, setTasks] = useState([])
+  const [project, setProject] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [openTaskModal, setOpenTaskModal] = useState(false)
+
+  const navigate = useNavigate()
 
   // const toDoTasks = tasks.filter(task => task.status.toLowerCase() === 'to do')
   // const inProgressTasks = tasks.filter(task => task.status.toLowerCase() === 'in progress')
   // const doneTasks = tasks.filter(task => task.status.toLowerCase() === 'done')
 
-  const [toDoTasks, setToDoTasks] = useState([]);
-  const [inProgressTasks, setInProgressTasks] = useState([]);
-  const [doneTasks, setDoneTasks] = useState([]);
+  const [toDoTasks, setToDoTasks] = useState([])
+  const [inProgressTasks, setInProgressTasks] = useState([])
+  const [doneTasks, setDoneTasks] = useState([])
 
   useEffect(() => {
-    //   const getSpecificProjectSprint = async () => {
-    //     const { data } = await getSpecificSprint(projectId, sprintId)
-    //     setSprint(data)
-    //   }
+    const getSpecificProject = async () => {
+      const { data } = await getProject(projectId)
+      setProject(data)
+    }
 
     const getAllTaskFromSprint = async () => {
-      setLoading(true);
-      const { data } = await getAllSprintTasks(projectId, sprintId);
-      setTasks(data);
+      setLoading(true)
+      const { data } = await getAllSprintTasks(projectId, sprintId)
+      setTasks(data)
 
-      setToDoTasks(
-        data.filter((task) => task.status.toLowerCase() === "to do")
-      );
+      setToDoTasks(data.filter((task) => task.status.toLowerCase() === 'to do'))
       setInProgressTasks(
-        data.filter((task) => task.status.toLowerCase() === "in progress")
-      );
-      setDoneTasks(data.filter((task) => task.status.toLowerCase() === "done"));
-      setLoading(false);
-    };
+        data.filter((task) => task.status.toLowerCase() === 'in progress')
+      )
+      setDoneTasks(data.filter((task) => task.status.toLowerCase() === 'done'))
+      setLoading(false)
+    }
 
-    // getSpecificProjectSprint()
-    getProject();
-    getAllTaskFromSprint();
-  }, []);
+    getSpecificProject()
+    getAllTaskFromSprint()
+  }, [])
 
   return (
     <>
@@ -69,6 +69,15 @@ const SprintDetails = () => {
         animate={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -50 }}
       >
+        <div className="mb-6">
+          <p
+            className="flex gap-2 items-center text-lg text-indigo-400 cursor-pointer"
+            onClick={() => navigate(`/dashboard/projects/${project.id}`)}
+          >
+            <BsChevronLeft /> Go back to your project
+          </p>
+        </div>
+
         <div className="flex justify-between space-x-1">
           <h2 className="text-gray-300 text-3xl"> Sprint details </h2>
         </div>
@@ -86,8 +95,8 @@ const SprintDetails = () => {
           <ProjectDetailsItem project={project} />
 
           <p className="mt-6 ml-6 font-sans text-3xl">
-            {" "}
-            Tasks for Sprint #{sprintId}{" "}
+            {' '}
+            Tasks for Sprint #{sprintId}{' '}
           </p>
 
           {!tasks.length && (
@@ -162,7 +171,7 @@ const SprintDetails = () => {
         </div>
       </motion.div>
     </>
-  );
-};
+  )
+}
 
-export default SprintDetails;
+export default SprintDetails
