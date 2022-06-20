@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { getProject, getAllSprints, getProjectUsers } from '../api'
-import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
-import { useParams } from 'react-router-dom'
-import { AiOutlinePlus } from 'react-icons/ai'
-import CreateSprintModal from '../components/modals/CreateSprintModal'
-import AddEmployeeModal from '../components/modals/AddEmployeeModal'
-import { motion } from 'framer-motion'
-import { useAuth } from '../context'
+import { useEffect, useState } from "react";
+import { getProject, getAllSprints, getProjectUsers } from "../api";
+import { ProjectDetailsItem, Spinner, SprintCardItem } from "../components";
+import { useParams } from "react-router-dom";
+import { AiOutlinePlus } from "react-icons/ai";
+import CreateSprintModal from "../components/modals/CreateSprintModal";
+import AddEmployeeModal from "../components/modals/AddEmployeeModal";
+import { motion } from "framer-motion";
+import { useAuth } from "../context";
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
@@ -16,7 +16,7 @@ const ProjectDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   useEffect(() => {
     const getSpecificProject = async () => {
@@ -50,68 +50,77 @@ const ProjectDetails = () => {
       )}
 
       <div className="lg:ml-[300px] shadow-lg shadow-indigo-900 mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
-      <motion.div
-        className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
-        animate={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: -50 }}
-      >
-        <div className="flex justify-between space-x-1">
-          <h2 className="text-gray-200 text-4xl"> Project details </h2>
-        </div>
-
-        {user.id === project.pmid && (
-          <div className="flex mt-8 mb-6">
-            <button
-              className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
-              onClick={() => setOpenEmployeeModal(true)}
-            >
-              <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
-            </button>
+        <motion.div
+          className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
+          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: -50 }}
+        >
+          <div className="flex justify-between space-x-1">
+            <h2 className="text-gray-200 text-4xl"> Project details </h2>
           </div>
-        )}
 
-        <div className="box-content shadow-lg shadow-indigo-900 border-4 rounded-lg w-5/6 mt-3 bg-indigo-900 border-indigo-300">
-          <ProjectDetailsItem project={project} />
-
-          <p className="mt-6 ml-12 tracking-normal font-sans text-4xl">
-            {" "}
-            Sprints{" "}
-          </p>
-
-          {!sprints.length && (
-            <p className="text-gray-400 text-xl ml-6 mt-2">
-              You have not participated in any sprint yet
-            </p>
+          {user.id === project.pmid && (
+            <div className="flex mt-8 mb-6">
+              <button
+                className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+                onClick={() => setOpenEmployeeModal(true)}
+              >
+                <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
+              </button>
+            </div>
           )}
 
-          <div className="mx-auto border-0 rounded-lg w-11/12 py-16 my-6 px-4 bg-slate-300 flex flex-wrap gap-16 justify-center ">
-            {loading ? (
-              <div className="p-4">
-                <Spinner color="text-indigo-500" />
-              </div>
-            ) : (
-              <>
-                {sprints?.map((sprint, idx) => (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                    <SprintCardItem key={sprint.id} sprint={sprint} idx={idx} />
-                  </motion.div>
-                ))}
-              </>
-            )}
-          </div>
-        </div>
+          <div className="box-content shadow-lg shadow-indigo-900 border-4 rounded-lg w-5/6 mt-3 bg-indigo-900 border-indigo-300">
+            <ProjectDetailsItem project={project} />
 
-        {user.id === project.pmid && (
-          <div className="flex mt-8 mb-6">
-            <button
-              className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
-              onClick={() => setOpenModal(true)}
-            >
-              <AiOutlinePlus className="inline-block text-2xl" /> Create Sprint
-            </button>
+            <p className="mt-6 ml-12 tracking-normal font-sans text-4xl">
+              {" "}
+              Sprints{" "}
+            </p>
+
+            {!sprints.length && (
+              <p className="text-gray-400 text-xl ml-6 mt-2">
+                You have not participated in any sprint yet
+              </p>
+            )}
+
+            <div className="mx-auto border-0 rounded-lg w-11/12 py-16 my-6 px-4 bg-slate-300 flex flex-wrap gap-16 justify-center ">
+              {loading ? (
+                <div className="p-4">
+                  <Spinner color="text-indigo-500" />
+                </div>
+              ) : (
+                <>
+                  {sprints?.map((sprint, idx) => (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <SprintCardItem
+                        key={sprint.id}
+                        sprint={sprint}
+                        idx={idx}
+                      />
+                    </motion.div>
+                  ))}
+                </>
+              )}
+            </div>
           </div>
-        )}
-      </motion.div>
+
+          {user.id === project.pmid && (
+            <div className="flex mt-8 mb-6">
+              <button
+                className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+                onClick={() => setOpenModal(true)}
+              >
+                <AiOutlinePlus className="inline-block text-2xl" /> Create
+                Sprint
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </div>
     </>
   );
 };

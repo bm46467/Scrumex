@@ -85,7 +85,7 @@ const Teams = () => {
         initial={{ opacity: 0, y: -50 }}
         className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl"
       >
-        <h2 className="text-gray-500 text-3xl"> Teams </h2>{" "}
+        <h2 className="text-gray-300 text-3xl"> Teams </h2>{" "}
         <div className="flex mt-8">
           <button
             className="flex ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
