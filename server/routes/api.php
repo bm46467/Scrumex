@@ -22,7 +22,9 @@ use App\Models\User;
 |
 */
 
+// Route::post('register', [AuthController::class, 'register'], [TrophyController::class, 'initTrophy']);
 Route::post('register', [AuthController::class, 'register']);
+
 Route::post('login', [AuthController::class, 'login']);
 
 Route::get('/users', function () {
@@ -81,9 +83,15 @@ Route::delete('teams/{teamId}', [TeamController::class, 'removeTeam']);
 #Remove user from team
 Route::delete('teams/{teamId}/users/{userId}', [TeamController::class, 'deleteUserFromTeam']);
 
-Route::post('/users/{userId}/trophy', function ($id) {
-    return User::find($id);
-});
+// Zwróć to gówno
+Route::get('/trophy', [TrophyController::class, 'getTrophies']);
+
+Route::get('/trophy/{user_id}', [TrophyController::class, 'getUserTrophy']);
+Route::patch('/trophy/{user_id}/{amount}', [TrophyController::class, 'addExpToUser']);
+
+// Route::post('/users/{userId}/trophy', function ($id) {
+//     return User::find($id);
+// });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'getUser']);
