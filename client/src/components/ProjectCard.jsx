@@ -1,3 +1,4 @@
+import ProjectCardItem from "./ProjectCardItem";
 import ProjectCardItem from './ProjectCardItem'
 import { motion } from 'framer-motion'
 
@@ -22,8 +23,11 @@ const ProjectCard = ({ projects, setProjects }) => {
       ) : (
         <p className="text-2xl">You have not added any project yet</p>
       )}
+    </div>
+  );
+};
     </>
   )
 }
 
-export default ProjectCard
+export default ProjectCard;

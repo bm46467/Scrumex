@@ -43,6 +43,10 @@ Route::patch('/users/{userId}', function ($id, Request $request) {
 Route::delete('users/{userId}', function ($id) {
     $res = User::find($id)->delete();
 });
+
+Route::get('users/{userId}', function ($id) {
+    $res = User::find($id)->delete();
+});
 #Get Projects
 Route::get('projects', [ProjectController::class, 'getProjects']);
 #Get specific project

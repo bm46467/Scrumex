@@ -34,11 +34,6 @@ const SprintDetails = () => {
     //     setSprint(data)
     //   }
 
-    const getSpecificProject = async () => {
-      const { data } = await getProject(projectId)
-      setProject(data)
-    }
-
     const getAllTaskFromSprint = async () => {
       setLoading(true)
       const { data } = await getAllSprintTasks(projectId, sprintId)
@@ -79,6 +74,7 @@ const SprintDetails = () => {
         <div className="flex mt-8 mb-6">
           <button
             className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+
             onClick={() => setOpenTaskModal(true)}
           >
             <AiOutlinePlus className="inline-block text-2xl" /> Create Task
