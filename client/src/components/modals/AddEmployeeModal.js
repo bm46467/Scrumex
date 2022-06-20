@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
-import { GrFormClose } from 'react-icons/gr'
-import { useAuth } from '../../context'
+import { GrFormClose } from "react-icons/gr";
+import { useAuth } from "../../context";
 
-import Spinner from '../Spinner'
-import { addUserToProject, getUsers } from '../../api'
-import { useParams } from 'react-router-dom'
+import Spinner from "../Spinner";
+import { addUserToProject, getUsers } from "../../api";
+import { useParams } from "react-router-dom";
 
 const CreateProjectModal = ({ setOpenEmployeeModal }) => {
-  const [name, setName] = useState('')
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [name, setName] = useState("");
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const { user } = useAuth()
-  const { projectId } = useParams()
+  const { user } = useAuth();
+  const { projectId } = useParams();
 
   const filterUsers = async (value) => {
-    setLoading(true)
-    const { data } = await getUsers()
+    setLoading(true);
+    const { data } = await getUsers();
 
     if (value) {
       setUsers(
         data.filter((el) => {
-          let fullName = el.first_name + ' ' + el.last_name
+          let fullName = el.first_name + " " + el.last_name;
           if (fullName.toLowerCase().includes(value.toLowerCase())) {
-            return el
+            return el;
           }
         })
-      )
+      );
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleChange = (e) => {
-    setName(e.target.value)
+    setName(e.target.value);
     if (e.target.value) {
-      filterUsers(e.target.value)
+      filterUsers(e.target.value);
     } else {
-      setUsers([])
+      setUsers([]);
     }
-  }
+  };
 
   const handleClick = async (userId) => {
-    setLoading(true)
-    setLoading(false)
+    setLoading(true);
+    setLoading(false);
 
-    await addUserToProject(projectId, userId)
+    await addUserToProject(projectId, userId);
 
-    toast('Successfully added new employee!')
-    setOpenEmployeeModal(false)
-  }
+    toast("Successfully added new employee!");
+    setOpenEmployeeModal(false);
+  };
 
   return (
     <motion.div
@@ -121,7 +121,7 @@ const CreateProjectModal = ({ setOpenEmployeeModal }) => {
         )}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default CreateProjectModal
+export default CreateProjectModal;

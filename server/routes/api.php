@@ -34,6 +34,10 @@ Route::get('/users/{userId}', function ($id) {
 Route::delete('users/{userId}', function ($id) {
     $res = User::find($id)->delete();
 });
+
+Route::get('users/{userId}', function ($id) {
+    $res = User::find($id)->delete();
+});
 #Get Projects
 Route::get('projects', [ProjectController::class, 'getProjects']);
 #Get specific project

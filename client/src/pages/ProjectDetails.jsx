@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react'
-import { getProject, getAllSprints, getProjectUsers } from '../api'
-import { ProjectDetailsItem, Spinner, SprintCardItem } from '../components'
-import { useParams } from 'react-router-dom'
-import { AiOutlinePlus } from 'react-icons/ai'
-import CreateSprintModal from '../components/modals/CreateSprintModal'
-import AddEmployeeModal from '../components/modals/AddEmployeeModal'
+import { useEffect, useState } from "react";
+import { getProject, getAllSprints, getProjectUsers } from "../api";
+import { ProjectDetailsItem, Spinner, SprintCardItem } from "../components";
+import { useParams } from "react-router-dom";
+import { AiOutlinePlus } from "react-icons/ai";
+import CreateSprintModal from "../components/modals/CreateSprintModal";
+import AddEmployeeModal from "../components/modals/AddEmployeeModal";
 
 const ProjectDetails = () => {
-  const { projectId } = useParams()
-  const [sprints, setSprints] = useState([])
-  const [project, setProject] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [openModal, setOpenModal] = useState(false)
-  const [openEmployeeModal, setOpenEmployeeModal] = useState(false)
+  const { projectId } = useParams();
+  const [sprints, setSprints] = useState([]);
+  const [project, setProject] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
 
   useEffect(() => {
     const getSpecificProject = async () => {
-      const { data } = await getProject(projectId)
-      setProject(data)
-    }
+      const { data } = await getProject(projectId);
+      setProject(data);
+    };
 
     const getAllProjectSprints = async () => {
-      setLoading(true)
-      const { data } = await getAllSprints(projectId)
-      setSprints(data)
-      setLoading(false)
-    }
+      setLoading(true);
+      const { data } = await getAllSprints(projectId);
+      setSprints(data);
+      setLoading(false);
+    };
 
-    getAllProjectSprints()
-    getSpecificProject()
-  }, [])
+    getAllProjectSprints();
+    getSpecificProject();
+  }, []);
 
   return (
     <>
@@ -45,24 +45,27 @@ const ProjectDetails = () => {
         />
       )}
 
-      <div className="lg:ml-[300px] mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
+      <div className="lg:ml-[300px] shadow-lg shadow-indigo-900 mt-36 md:mt-16 p-8 lg:p-12 border-2 border-indigo-500 mx-4 rounded-xl">
         <div className="flex justify-between space-x-1">
-          <h2 className="text-gray-500 text-3xl"> Project details </h2>
+          <h2 className="text-gray-200 text-4xl"> Project details </h2>
         </div>
 
         <div className="flex mt-8 mb-6">
           <button
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+            className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
             onClick={() => setOpenEmployeeModal(true)}
           >
             <AiOutlinePlus className="inline-block text-2xl" /> Add Employee
           </button>
         </div>
 
-        <div className="box-content border border-4 rounded-lg w-5/6 border-white mt-3 bg-indigo-900 border-indigo-300">
+        <div className="box-content shadow-lg shadow-indigo-900 border-4 rounded-lg w-5/6 mt-3 bg-indigo-900 border-indigo-300">
           <ProjectDetailsItem project={project} />
 
-          <p className="mt-6 ml-6 font-sans text-3xl"> Sprints </p>
+          <p className="mt-6 ml-12 tracking-normal font-sans text-4xl">
+            {" "}
+            Sprints{" "}
+          </p>
 
           {!sprints.length && (
             <p className="text-gray-400 text-xl ml-6 mt-2">
@@ -70,7 +73,7 @@ const ProjectDetails = () => {
             </p>
           )}
 
-          <div className="mx-auto box-content border-0 rounded-lg w-5/6 my-5 px-4 bg-slate-300 flex flex-wrap gap-6">
+          <div className="mx-auto border-0 rounded-lg w-11/12 py-16 my-6 px-4 bg-slate-300 flex flex-wrap gap-16 justify-center ">
             {loading ? (
               <div className="p-4">
                 <Spinner color="text-indigo-500" />
@@ -87,7 +90,7 @@ const ProjectDetails = () => {
 
         <div className="flex mt-8 mb-6">
           <button
-            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
+            className="flex items-center ring-2 ring-slate-800 ring-offset-1 ring-offset-indigo-100/[.55] gap-2 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg cursor-pointer font-semibold transition-all hover:scale-105"
             onClick={() => setOpenModal(true)}
           >
             <AiOutlinePlus className="inline-block text-2xl" /> Create Sprint
@@ -95,7 +98,7 @@ const ProjectDetails = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProjectDetails
+export default ProjectDetails;
