@@ -8,7 +8,6 @@ use App\Models\Trophy;
 
 class TrophyController extends Controller
 {
-    //JEBAĆ BAKUNA TUDUDUDU
     private $baseCap = 100;
     private $capMultiplier = 1.1;
 

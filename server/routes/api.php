@@ -83,9 +83,7 @@ Route::delete('teams/{teamId}', [TeamController::class, 'removeTeam']);
 #Remove user from team
 Route::delete('teams/{teamId}/users/{userId}', [TeamController::class, 'deleteUserFromTeam']);
 
-// Zwróć to gówno
 Route::get('/trophy', [TrophyController::class, 'getTrophies']);
-
 Route::get('/trophy/{user_id}', [TrophyController::class, 'getUserTrophy']);
 Route::patch('/trophy/{user_id}/{amount}', [TrophyController::class, 'addExpToUser']);
 
